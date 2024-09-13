@@ -2,20 +2,16 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Repositories\QueryFilter;
-use Laravel\Sanctum\HasApiTokens;
-use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements AuthorizableContract
+class Admin extends Authenticatable
 {
     use HasApiTokens, HasFactory, HasRoles, Notifiable;
-    // protected $guard_name = ['api-user'];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -23,9 +19,8 @@ class User extends Authenticatable implements AuthorizableContract
      */
     protected $fillable = [
         'name',
-        // 'email',
-        // 'password',
-        'line_id',
+        'email',
+        'password',
     ];
 
     /**
@@ -49,10 +44,5 @@ class User extends Authenticatable implements AuthorizableContract
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
-    }
-
-    public function scopeFilter(Builder $builder, QueryFilter $filters)
-    {
-        return $filters->apply($builder);
     }
 }
